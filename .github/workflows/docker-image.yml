@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RUN_NUMBER: fitness-$GITHUB_RUN_NUMBER
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
       PROJECT_ID: dls-exam
     steps:
     - name: Checkout
@@ -17,15 +18,15 @@ jobs:
 
     - uses: google-github-actions/setup-gcloud@main
       with:
-        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-        project_id: ${{ env.ARTIFACT_PROJECT_ID }}
+        service_account_key: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+        project_id: ${{ env.PROJECT_ID }}
         export_default_credentials: true
 
     - name: Authenticate with Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        service_account: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-        project_id: ${{ env.ARTIFACT_PROJECT_ID }}
+        service_account: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+        project_id: ${{ env.PROJECT_ID }}
     
     #- name: Automatic Tagging of Releases
     #  id: increment-git-tag 
