@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-      PROJECT_ID: ${{ env.GCP_PROJECT_ID }}
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       IMAGE_NAME: fit ness-$GITHUB_RUN_NUMBER
       export_default_credentials: true
     steps:
