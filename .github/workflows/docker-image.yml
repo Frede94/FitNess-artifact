@@ -11,7 +11,7 @@ jobs:
     env:
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
       PROJECT_ID: ${{ secrets.ARTIFACT_PROJECT_ID }}
-      IMAGE_NAME: fitness-$GITHUB_RUN_NUMBER
+      RUN_NUMBER: fitness-$GITHUB_RUN_NUMBER
       export_default_credentials: true
     steps:
     - name: Checkout
@@ -29,11 +29,11 @@ jobs:
 
     - name: Build and push Docker images
       run: |
-        docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-workout-service:${{ github.sha }} -f WorkoutService/Dockerfile .
-        docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-workout-service:${{ github.sha }}
+        docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.RUN_NUMBER }}-workout-service:${{ github.sha }} -f WorkoutService/Dockerfile .
+        docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.RUN_NUMBER }}-workout-service:${{ github.sha }}
 
-        docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-nutrition-service:${{ github.sha }} -f NutritionService/Dockerfile .
-        docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-nutrition-service:${{ github.sha }}
+        docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.RUN_NUMBER }}-nutrition-service:${{ github.sha }} -f NutritionService/Dockerfile .
+        docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.RUN_NUMBER }}-nutrition-service:${{ github.sha }}
 
-        docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-user-service:${{ github.sha }} -f UserService/Dockerfile .
-        docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-user-service:${{ github.sha }}
+        docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.RUN_NUMBER }}-user-service:${{ github.sha }} -f UserService/Dockerfile .
+        docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.RUN_NUMBER }}-user-service:${{ github.sha }}
