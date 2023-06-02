@@ -17,10 +17,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     
-    - name: Automatic Tagging of Releases
-      id: increment-git-tag
-      run: |
-        bash ./scripts/git_update.sh -v major
+    #- name: Automatic Tagging of Releases
+    #  id: increment-git-tag
+    #  run: |
+    #    bash ./scripts/git_update.sh -v major
 
     - name: Configure Docker Client
       run: |
