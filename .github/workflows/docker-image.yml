@@ -24,7 +24,7 @@ jobs:
     - name: Authenticate with Google Cloud
       uses: google-github-actions/auth@main
       with:
-        credentials: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
     
     #- name: Automatic Tagging of Releases
     #  id: increment-git-tag 
