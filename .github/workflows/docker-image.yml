@@ -1,19 +1,18 @@
-name: Docker Image CI
-
+name: Build and Push images to Google Artifacts/Container Registry
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   build:
     name: Build and Push
     runs-on: ubuntu-latest
     env:
-      PROJECT_ID: ${{ env.GCP_PROJECT_ID }}
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+      PROJECT_ID: ${{ env.GCP_PROJECT_ID }}
       IMAGE_NAME: fit ness-$GITHUB_RUN_NUMBER
+      export_default_credentials: true
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -29,17 +28,12 @@ jobs:
         gcloud auth configure-docker europe-west3-docker.pkg.dev --quiet
 
     - name: Build and push Docker images
-      #env:
-      #  GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
       run: |
-        #docker tag $IMAGE_NAME:latest us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
         docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-workout-service:${{ github.sha }} -f WorkoutService/Dockerfile .
         docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-workout-service:${{ github.sha }}
 
-        #docker tag $IMAGE_NAME:latest us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
         docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-nutrition-service:${{ github.sha }} -f NutritionService/Dockerfile .
         docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-nutrition-service:${{ github.sha }}
 
-        #docker tag $IMAGE_NAME:latest us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
         docker build -t europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-user-service:${{ github.sha }} -f UserService/Dockerfile .
         docker push europe-west3-docker.pkg.dev/$PROJECT_ID/${{ env.IMAGE_NAME }}-user-service:${{ github.sha }}
