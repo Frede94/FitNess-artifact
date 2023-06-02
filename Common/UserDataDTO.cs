@@ -7,5 +7,5 @@ public class UserDataDTO
     public string? Sex { get; set; }
     public double Weight { get; set; }
     public double KgLossPerWeek { get; set; }
-    public double Height { get; set; }
+    public double Height { get; set; } 
 }
