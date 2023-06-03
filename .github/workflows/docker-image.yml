@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  build:
+  docker_images_artifact_registry:
     name: Build and Push
     runs-on: ubuntu-latest
     env:
